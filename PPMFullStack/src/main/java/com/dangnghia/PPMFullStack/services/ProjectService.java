@@ -6,6 +6,7 @@ import com.dangnghia.PPMFullStack.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,7 @@ public class ProjectService {
             throw new ProjectIdException("Project ID "+project.getProjectIdentifier().toUpperCase());
         }
     }
+
     public Project findProjectByIdentifier(String projectId){
        Project project = projectRepository.findByProjectIdentifier(projectId);
        if (project == null){
@@ -29,7 +31,7 @@ public class ProjectService {
        return project;
     }
 
-    public Iterable<Project> findAllProjects(){
+    public List<Project> findAllProjects(){
         return projectRepository.findAll();
     }
 
@@ -40,8 +42,11 @@ public class ProjectService {
         }
         projectRepository.delete(project);
     }
+
     public Project getProjectById(Long id) {
         return projectRepository.findById(id).get();
     }
-
+    public Optional<Project> getProjectByName(String projectName){
+        return projectRepository.findByProjectName(projectName);
+    }
 }
